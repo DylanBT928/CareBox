@@ -10,9 +10,11 @@ body,
 .home {
   background: #fff0f6;
   min-height: 100dvh;
+  max-height: 100dvh;
   padding: 1dvw 1dvw 80px;
   box-sizing: border-box;
   width: 100dvw;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
