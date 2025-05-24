@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase.ts";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db, auth } from "../firebase";
 import "./Home.css";
 
 type Item = {
@@ -16,7 +16,11 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchItems() {
-      const querySnapshot = await getDocs(collection(db, "items"));
+      const q = query(
+        collection(db, "items"),
+        where("ownerId", "==", auth.currentUser?.uid)
+      );
+      const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
