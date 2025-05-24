@@ -6,7 +6,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" className={pathname === "/" ? "active" : ""}>
+      <Link to="/home" className={pathname === "/home" ? "active" : ""}>
         Home
       </Link>
       <Link to="/add" className={pathname === "/add" ? "active" : ""}>
