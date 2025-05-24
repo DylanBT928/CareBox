@@ -8,7 +8,7 @@ export default function Welcome() {
     <div className="welcome-container">
       <div className="welcome-title">CareBox</div>
       <div className="welcome-buttons">
-        <button onClick={() => navigate("/home")}>Log In</button>
+        <button onClick={() => navigate("/login")}>Log In</button>
         <button onClick={() => navigate("/signup")}>Sign Up</button>
       </div>
     </div>
