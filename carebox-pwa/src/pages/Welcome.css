@@ -1,0 +1,46 @@
+.welcome-container {
+  background: #fff0f6;
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 5dvw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.welcome-title {
+  font-size: 8dvw;
+  font-weight: bold;
+  color: #b20086;
+  margin-bottom: 5dvh;
+  font-family: "Handlee", cursive;
+}
+
+.welcome-buttons {
+  display: flex;
+  gap: 4dvw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.welcome-buttons button {
+  background: #ff69b4;
+  color: white;
+  font-family: "Handlee", cursive;
+  font-size: 4dvw;
+  font-weight: bold;
+  padding: 1.5dvh 4dvw;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.welcome-buttons button:hover {
+  background: #ff85c1;
+  transform: translateY(-1px);
+}
