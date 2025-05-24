@@ -16,20 +16,12 @@ html,
 body,
 #root {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-#root {
-  min-height: 100dvh;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-color, #fff0f6);
+  height: 100dvh;
+  width: 100dvw;
+  box-sizing: border-box;
+  background: #fff0f6; /* match your app bg */
 }
 
 :root {
@@ -86,8 +78,13 @@ a:hover {
 
 body {
   font-family: "London", sans-serif;
-  color: var(--text-color);
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
   background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 h1 {

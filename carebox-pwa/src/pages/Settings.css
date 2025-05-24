@@ -1,15 +1,16 @@
 .settings-container {
   background: var(--bg-color, #fff0f6);
   min-height: 100dvh;
-  width: 100%;
-  padding: 1dvw 1dvw 0;
+  max-height: 100dvh;
+  width: 100dvw;
+  padding: 1dvw 1dvw 80px;
+  padding-bottom: 90px;
   box-sizing: border-box;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
-  flex: 1;
 }
 
 .settings-container h1 {

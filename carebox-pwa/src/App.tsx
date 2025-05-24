@@ -14,16 +14,7 @@ function AppRoutes() {
 
   return (
     <>
-      <div
-        style={{
-          paddingBottom: showNavbar
-            ? `calc(70px + env(safe-area-inset-bottom, 0px))`
-            : "0",
-          minHeight: "100dvh",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div style={{ paddingBottom: showNavbar ? "60px" : "0" }}>
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
