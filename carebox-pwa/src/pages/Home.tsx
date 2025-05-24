@@ -91,9 +91,9 @@ export default function Home() {
       !auth.currentUser ? <h1>Please sign in</h1> :
       <div className="items">
         <h1>Welcome, {getFriendlyName()}!</h1>
-        <AvailabilityCategory items={noneLeft} categoryTitle="Need immediate restocking" categoryColor="ffb6c1"/>
-        <AvailabilityCategory items={littleLeft} categoryTitle="Limited amount remaining" categoryColor="fff0c1"/>
-        <AvailabilityCategory items={manyLeft} categoryTitle="Enough for at least a week" categoryColor="c8ffc1"/>
+        <AvailabilityCategory items={noneLeft} categoryTitle="Out of stock" categoryColor="ffb6c1"/>
+        <AvailabilityCategory items={littleLeft} categoryTitle="Low stock" categoryColor="fff0c1"/>
+        <AvailabilityCategory items={manyLeft} categoryTitle="In stock" categoryColor="c8ffc1"/>
       </div>}
     </div>
   );
