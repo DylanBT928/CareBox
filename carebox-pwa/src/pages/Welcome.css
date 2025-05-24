@@ -13,11 +13,12 @@
 }
 
 .welcome-title {
-  font-size: 8dvw;
+  font-family: "Brittany", cursive;
+  color: #800080;
+  text-align: center;
+  font-size: 20dvw;
   font-weight: bold;
-  color: #b20086;
-  margin-bottom: 5dvh;
-  font-family: "Handlee", cursive;
+  margin-bottom: 10dvh;
 }
 
 .welcome-buttons {

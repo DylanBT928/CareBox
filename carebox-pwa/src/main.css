@@ -1,5 +1,19 @@
+@font-face {
+  font-family: "Brittany";
+  src: url("/src/assets/fonts/BrittanySignature.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "London";
+  src: url("/src/assets/fonts/LondonMM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Handlee", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -23,6 +37,7 @@ a:hover {
 }
 
 body {
+  font-family: "London", sans-serif;
   margin: 0;
   display: flex;
   place-items: center;
