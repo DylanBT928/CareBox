@@ -13,19 +13,32 @@ type Item = {
 
 export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchItems() {
-      const q = query(
-        collection(db, "items"),
-        where("ownerId", "==", auth.currentUser?.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Item[];
-      setItems(data);
+      const user = auth.currentUser;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const q = query(
+          collection(db, "items"),
+          where("ownerId", "==", user.uid)
+        );
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<Item, "id">),
+        }));
+        setItems(data);
+      } catch (err) {
+        console.error("Error fetching items:", err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchItems();
@@ -35,6 +48,22 @@ export default function Home() {
     item.usagePerDay > 0
       ? Math.floor(item.quantityLeft / item.usagePerDay)
       : "∞";
+
+  if (loading) {
+    return (
+      <div className="home">
+        <h1>Loading your items...</h1>
+      </div>
+    );
+  }
+
+  if (!auth.currentUser) {
+    return (
+      <div className="home">
+        <h1>Please sign in to view your CareBox</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="home">
