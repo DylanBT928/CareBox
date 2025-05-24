@@ -60,14 +60,25 @@ export default function Home() {
   if (!auth.currentUser) {
     return (
       <div className="home">
-        <h1>Please sign in to view your CareBox</h1>
+        <h1>Please sign in</h1>
       </div>
     );
   }
 
+  const getFriendlyName = () => {
+    const user = auth.currentUser;
+    if (!user) return "friend";
+
+    if (user.displayName) return user.displayName;
+
+    if (user.email) return user.email.split("@")[0];
+
+    return "friend";
+  };
+
   return (
     <div className="home">
-      <h1>Welcome, VenusHacks!</h1>
+      <h1>Welcome, {getFriendlyName()}!</h1>
       {items.map((item) => (
         <div className="card" key={item.id}>
           <div className="card-header">
