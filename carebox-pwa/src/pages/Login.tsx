@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {GoogleLogin} from '@react-oauth/google';
+//import {GoogleLogin} from '@react-oauth/google';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./SignUp.css";
 
