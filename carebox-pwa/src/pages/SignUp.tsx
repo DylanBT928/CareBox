@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { initializeApp } from "firebase/app";
+//import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "./SignUp.css";
 
@@ -28,14 +28,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     alert(`Name: ${credentialsValue.email}, Email: ${credentialsValue.email}`);
     const auth = getAuth();
 createUserWithEmailAndPassword(auth, credentialsValue.email, credentialsValue.password)
-  .then((userCredential) => {
+  .then((_userCredential) => {
     // Signed up 
-    const user = userCredential.user;
+    //const user = userCredential.user;
     // ...
   })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+  .catch((_error) => {
+    //const errorCode = error.code;
+    //const errorMessage = error.message;
     // ..
   });
 };
