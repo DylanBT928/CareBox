@@ -1,0 +1,135 @@
+.map-container {
+  background: var(--bg-color, #fff0f6);
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.map-container h1 {
+  font-size: 6dvw;
+  font-weight: bold;
+  color: var(--text-color, #800080);
+  margin: 10px 0 15px;
+  text-align: center;
+}
+
+.leaflet-map {
+  width: 100%;
+  height: 80dvh;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px var(--shadow-color, rgba(0, 0, 0, 0.2));
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+.map-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 25px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 4dvw;
+  color: var(--text-color, #800080);
+  max-width: 80%;
+  z-index: 1000;
+}
+
+.map-status.error {
+  color: #e53935;
+  background-color: #fff8f8;
+  border: 1px solid #ffcdd2;
+}
+
+.retry-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: var(--button-bg, #da70d6);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 3.5dvw;
+  cursor: pointer;
+}
+
+.location-button {
+  position: absolute;
+  bottom: 13dvh;
+  right: 4dvw;
+  background: var(--button-bg, #da70d6);
+  color: white;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 2px 6px var(--shadow-color, rgba(0, 0, 0, 0.3));
+  cursor: pointer;
+  z-index: 1500;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.location-button:active {
+  transform: scale(0.95);
+}
+
+.user-location-marker {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: transparent !important;
+}
+
+.marker-inner {
+  width: 14px;
+  height: 14px;
+  background: var(--button-bg, #da70d6);
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(218, 112, 214, 0.3);
+}
+
+.leaflet-control-container {
+  z-index: 1000 !important;
+}
+
+.leaflet-bottom {
+  bottom: 20px !important;
+}
+
+.leaflet-bottom.leaflet-right {
+  right: 90px !important;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  max-width: 80% !important;
+  white-space: normal !important;
+  line-height: 1.2 !important;
+}
+
+@media (max-height: 600px) {
+  .location-button {
+    bottom: 80px;
+  }
+}
