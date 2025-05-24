@@ -10,7 +10,7 @@ import Settings from "./pages/Settings";
 
 function AppRoutes() {
   const { pathname } = useLocation();
-  const showNavbar = pathname !== "/";
+  const showNavbar = !["/", "/signup", "/login"].includes(pathname);
 
   return (
     <>
