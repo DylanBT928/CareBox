@@ -28,7 +28,7 @@ export default function SignUp() {
     e.preventDefault();
 
     console.log("Form submitted:", credentialsValue);
-    alert(`Email: ${credentialsValue.email}`);
+    // (`Email: ${credentialsValue.email}`);
 
     const auth = getAuth();
 
@@ -38,7 +38,7 @@ export default function SignUp() {
       credentialsValue.password
     )
       .then((_userCredential) => {
-        alert("Account created successfully!");
+        // alert("Account created successfully!");
         navigate("/home");
       })
       .catch((error) => {

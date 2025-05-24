@@ -9,7 +9,7 @@ export default function Settings() {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        alert("Signed out successfully!");
+        // alert("Signed out successfully!");
         navigate("/");
       })
       .catch((error) => {
