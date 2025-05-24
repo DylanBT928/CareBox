@@ -1,13 +1,16 @@
-import "./Home.css";
+import { useNavigate } from "react-router-dom";
+import "./Welcome.css";
 
 export default function Welcome() {
+  const navigate = useNavigate();
+
   return (
-  <div>
-    <div>CareBox</div>
-    <div>
-      <button>Log in</button>
-      <button>Sign Up</button>
+    <div className="welcome-container">
+      <div className="welcome-title">CareBox</div>
+      <div className="welcome-buttons">
+        <button onClick={() => navigate("/home")}>Log In</button>
+        <button onClick={() => navigate("/home")}>Sign Up</button>
+      </div>
     </div>
-  </div>
-    );
+  );
 }
