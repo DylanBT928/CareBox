@@ -3,16 +3,13 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import "./Home.css";
 
-type Item = {
-  id: string;
-  name: string;
-  usagePerDay: number;
-  quantityLeft: number;
-  reorderLink: string;
-};
+import type Item from "../../types/Item";
+import AvailabilityCategory from "../components/AvailabilityCategory";
 
 export default function Home() {
-  const [items, setItems] = useState<Item[]>([]);
+  const [noneLeft, setNoneLeft] = useState<Item[]>([]);
+  const [littleLeft, setLittleLeft] = useState<Item[]>([]);
+  const [manyLeft, setManyLeft] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,11 +26,37 @@ export default function Home() {
           where("ownerId", "==", user.uid)
         );
         const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<Item, "id">),
-        }));
-        setItems(data);
+
+        const noneLeftItems: Item[] = [];
+        const littleLeftItems: Item[] = [];
+        const manyLeftItems: Item[] = [];
+
+        querySnapshot.docs.forEach((doc) => {
+          const item = {
+            id: doc.id,
+            ...(doc.data() as Omit<Item, "id">),
+          }
+
+          const daysLeft = calcDaysLeft(item);
+
+          item.daysLeft = daysLeft;
+
+          if (daysLeft == 0) {
+            noneLeftItems.push(item);
+          } else if (daysLeft != '∞' && daysLeft <= 7) {
+            littleLeftItems.push(item);
+          } else {
+            manyLeftItems.push(item);
+          }
+        });
+
+        noneLeftItems.sort(sortByName);
+        littleLeftItems.sort(sortByName);
+        manyLeftItems.sort(sortByName);
+        
+        setNoneLeft(noneLeftItems);
+        setLittleLeft(littleLeftItems);
+        setManyLeft(manyLeftItems);
       } catch (err) {
         console.error("Error fetching items:", err);
       } finally {
@@ -44,26 +67,7 @@ export default function Home() {
     fetchItems();
   }, []);
 
-  const calcDaysLeft = (item: Item) =>
-    item.usagePerDay > 0
-      ? Math.floor(item.quantityLeft / item.usagePerDay)
-      : "∞";
-
-  if (loading) {
-    return (
-      <div className="home">
-        <h1>Loading your items...</h1>
-      </div>
-    );
-  }
-
-  if (!auth.currentUser) {
-    return (
-      <div className="home">
-        <h1>Please sign in</h1>
-      </div>
-    );
-  }
+  const sortByName = (item1: Item, item2: Item) => item1.name.localeCompare(item2.name);
 
   const getFriendlyName = () => {
     const user = auth.currentUser;
@@ -76,37 +80,21 @@ export default function Home() {
     return "friend";
   };
 
+  const calcDaysLeft = (item: Item) =>
+        item.usagePerDay > 0
+        ? Math.floor(item.quantityLeft / item.usagePerDay)
+        : "∞";
+
   return (
     <div className="home">
-      <h1>Welcome, {getFriendlyName()}!</h1>
-      {items.map((item) => (
-        <div className="card" key={item.id}>
-          <div className="card-header">
-            <div>
-              <div className="name">{item.name}</div>
-              <div className="subtext">{item.usagePerDay}/day</div>
-              <div className="subtext">{item.quantityLeft} left</div>
-            </div>
-            <div className="badge">
-              {calcDaysLeft(item)} {calcDaysLeft(item) === 1 ? "day" : "days"}{" "}
-              left
-            </div>
-          </div>
-          <div className="card-actions">
-            <a
-              href={item.reorderLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn"
-            >
-              Reorder Now
-            </a>
-            <a href={`/item/${item.id}`} className="btn">
-              View
-            </a>
-          </div>
-        </div>
-      ))}
+      {loading ? <h1>Loading your items...</h1> :
+      !auth.currentUser ? <h1>Please sign in</h1> :
+      <div className="items">
+        <h1>Welcome, {getFriendlyName()}!</h1>
+        <AvailabilityCategory items={noneLeft} categoryTitle="Need immediate restocking" categoryColor="ffb6c1"/>
+        <AvailabilityCategory items={littleLeft} categoryTitle="Limited amount remaining" categoryColor="fff0c1"/>
+        <AvailabilityCategory items={manyLeft} categoryTitle="Enough for at least a week" categoryColor="c8ffc1"/>
+      </div>}
     </div>
   );
 }
