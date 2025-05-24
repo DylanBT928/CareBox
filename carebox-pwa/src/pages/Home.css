@@ -35,3 +35,17 @@ h1 {
 .items {
   min-width: 95%;
 }
+
+.add-btn {
+  background: var(--button-bg, #da70d6);
+  color: white;
+  font-weight: bold;
+  font-size: 4dvw;
+  padding: 1.5dvh 3dvw;
+  border: none;
+  border-radius: 9999px;
+  margin-bottom: 2dvh;
+  box-shadow: 0 2px 5px var(--shadow-color, rgba(0, 0, 0, 0.2));
+  transition: background 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+}

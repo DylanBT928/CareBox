@@ -10,6 +10,7 @@ interface Props {
 
 export default function AvailabilityCategory(props: Props) {
     return (
+        props.items.length != 0 &&
         <div>
             <h2>{props.categoryTitle}</h2>
             {props.items.map(item => <ItemCard item={item} categoryColor={props.categoryColor} key={item.id}/>)}

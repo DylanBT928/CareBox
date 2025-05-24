@@ -17,7 +17,7 @@ export default function ItemCard(props: Props) {
                     <div className="subtext">{props.item.quantityLeft} left</div>
                 </div>
                 <div className="badge" style={{background: `#${props.categoryColor}`}}>
-                    {props.item.daysLeft} {props.item.daysLeft === 1 ? "day" : "days"}{" "}
+                    {props.item.daysLeft == Infinity ? "∞" : props.item.daysLeft} {props.item.daysLeft === 1 ? "day" : "days"}{" "}
                     left
                 </div>
             </div>
