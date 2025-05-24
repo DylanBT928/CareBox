@@ -8,7 +8,7 @@ body,
 }
 
 .home {
-  background: #f5f5f5;
+  background: #fff0f6;
   min-height: 100dvh;
   padding: 1dvw 1dvw 80px;
   box-sizing: border-box;
@@ -23,13 +23,13 @@ h1 {
   font-size: 6dvw;
   font-weight: bold;
   margin-bottom: 2dvh;
-  color: #111;
+  color: #800080;
   width: 100%;
   text-align: center;
 }
 
 .card {
-  background: #87ffff;
+  background: #ffd1e2;
   border-radius: 2dvw;
   padding: 3dvw;
   margin-bottom: 3dvh;
@@ -50,21 +50,21 @@ h1 {
   font-size: 5dvw;
   font-weight: bold;
   margin-bottom: 1dvh;
-  color: #111;
+  color: #800080;
 }
 
 .subtext {
   font-size: 3.5dvw;
-  color: #333;
+  color: #555;
 }
 
 .badge {
-  background: #ffd60a;
+  background: #ffb6c1;
   padding: 0.4dvh 1.4dvw;
   border-radius: 9999px;
   font-weight: 700;
   font-size: 3.2dvw;
-  color: #000;
+  color: #800040;
   white-space: nowrap;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
@@ -78,7 +78,7 @@ h1 {
 }
 
 .btn {
-  background: #1e3aff;
+  background: #da70d6;
   color: white;
   font-weight: bold;
   padding: 1.5dvh 3dvw;
@@ -90,5 +90,5 @@ h1 {
 }
 
 .btn:hover {
-  background: #3b5bff;
+  background: #c060d6;
 }
