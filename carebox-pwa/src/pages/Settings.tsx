@@ -6,8 +6,20 @@ import "./Settings.css";
 export default function Settings() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const handleLogout = () => {
     const auth = getAuth();
@@ -21,13 +33,7 @@ export default function Settings() {
   };
 
   const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    document.documentElement.setAttribute(
-      "data-theme",
-      newMode ? "dark" : "light"
-    );
-    localStorage.setItem("theme", newMode ? "dark" : "light");
+    setDarkMode((prevMode) => !prevMode);
   };
 
   useEffect(() => {
@@ -40,11 +46,14 @@ export default function Settings() {
   return (
     <div className="settings-container">
       <h1>Settings</h1>
+      <div className="settings-option">
+        <span className="setting-label"></span>
+        <button onClick={toggleDarkMode} className="theme-toggle-btn">
+          {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <button onClick={handleLogout} className="logout-btn">
         Log Out
-      </button>
-      <button onClick={toggleDarkMode} className="darkmode-btn">
-        {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
       </button>
     </div>
   );

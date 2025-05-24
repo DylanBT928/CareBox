@@ -21,8 +21,23 @@
   text-align: center;
 }
 
+.settings-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 3dvh;
+}
+
+.setting-label {
+  font-size: 4dvw;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 1dvh;
+}
+
 .settings-container button {
-  background: #da70d6;
+  background: var(--button-bg, #da70d6);
   color: white;
   font-weight: bold;
   font-size: 4dvw;
@@ -30,12 +45,21 @@
   border: none;
   border-radius: 9999px;
   margin-bottom: 2dvh;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px var(--shadow-color, rgba(0, 0, 0, 0.2));
   transition: background 0.2s ease, transform 0.1s ease;
   cursor: pointer;
 }
 
 .settings-container button:hover {
-  background: #c060d6;
+  background: var(--button-hover-bg, #c060d6);
   transform: translateY(-1px);
+}
+
+.theme-toggle-btn {
+  width: 80%;
+  max-width: 350px;
+}
+
+.logout-btn {
+  margin-top: 2dvh;
 }
