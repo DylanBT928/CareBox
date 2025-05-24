@@ -4,5 +4,6 @@
     "strict": true,
     "types": ["nativewind/types"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "types"]
+  "include": ["**/*.ts", "**/*.tsx", "types"],
+  "exclude": ["node_modules", "**/node_modules/expo-blur/tsconfig.json"]
 }
