@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./Map.css";
 
-// Add TypeScript interface for window.L
 declare global {
   interface Window {
     L: any;
@@ -17,7 +16,6 @@ export default function Map() {
   const [leafletLoaded, setLeafletLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if Leaflet is already loaded
     if (window.L) {
       setLeafletLoaded(true);
       return;
@@ -25,13 +23,11 @@ export default function Map() {
 
     const loadLeaflet = async () => {
       try {
-        // Load Leaflet CSS
         const linkElement = document.createElement("link");
         linkElement.rel = "stylesheet";
         linkElement.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
         document.head.appendChild(linkElement);
 
-        // Load Leaflet JS - using a Promise to ensure it's loaded
         return new Promise<void>((resolve, reject) => {
           const script = document.createElement("script");
           script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
@@ -58,7 +54,6 @@ export default function Map() {
     loadLeaflet();
   }, []);
 
-  // Initialize map after Leaflet is loaded
   useEffect(() => {
     if (leafletLoaded && mapRef.current) {
       initMap();
@@ -73,25 +68,21 @@ export default function Map() {
     }
 
     try {
-      // Clear the map div in case of re-initialization
       mapRef.current.innerHTML = "";
 
       const defaultLocation = [37.7749, -122.4194]; // San Francisco
 
-      // Create the map
       leafletMap.current = window.L.map(mapRef.current).setView(
         defaultLocation,
         13
       );
 
-      // Add the OpenStreetMap tile layer
       window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(leafletMap.current);
 
-      // Get user's current location
       getUserLocation();
     } catch (e) {
       console.error("Error initializing map:", e);

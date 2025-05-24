@@ -70,8 +70,13 @@
   color: white;
   width: 50px;
   height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
   border: none;
   border-radius: 50%;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +84,8 @@
   box-shadow: 0 2px 6px var(--shadow-color, rgba(0, 0, 0, 0.3));
   cursor: pointer;
   z-index: 1500;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .location-button:active {
