@@ -8,9 +8,10 @@ body,
 }
 
 .home {
-  background: #fff0f6;
+  background: var(--bg-color, #fff0f6);
   min-height: 100dvh;
   max-height: 100dvh;
+  padding-bottom: 90px;
   box-sizing: border-box;
   min-width: 100dvw;
   overflow-y: auto;
@@ -24,7 +25,7 @@ h1 {
   font-size: 6dvw;
   font-weight: bold;
   margin-bottom: 2dvh;
-  color: #800080;
+  color: var(--text-color, #800080);
   width: 100%;
   text-align: center;
 }

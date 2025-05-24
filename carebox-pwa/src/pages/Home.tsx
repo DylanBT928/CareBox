@@ -43,7 +43,7 @@ export default function Home() {
 
           if (daysLeft == 0) {
             noneLeftItems.push(item);
-          } else if (daysLeft != '∞' && daysLeft <= 7) {
+          } else if (daysLeft <= 7) {
             littleLeftItems.push(item);
           } else {
             manyLeftItems.push(item);
@@ -67,7 +67,13 @@ export default function Home() {
     fetchItems();
   }, []);
 
-  const sortByName = (item1: Item, item2: Item) => item1.name.localeCompare(item2.name);
+  const sortByName = (item1: Item, item2: Item) => {
+    if (item1.daysLeft == item2.daysLeft) {
+      return item1.name.localeCompare(item2.name);
+    } else {
+      return item1.daysLeft - item2.daysLeft;
+    }
+  };
 
   const getFriendlyName = () => {
     const user = auth.currentUser;
@@ -83,7 +89,7 @@ export default function Home() {
   const calcDaysLeft = (item: Item) =>
         item.usagePerDay > 0
         ? Math.floor(item.quantityLeft / item.usagePerDay)
-        : "∞";
+        : Infinity;
 
   return (
     <div className="home">

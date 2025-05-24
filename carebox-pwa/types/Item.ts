@@ -3,6 +3,6 @@ export default interface Item {
   name: string;
   usagePerDay: number;
   quantityLeft: number;
-  daysLeft: number | '∞';
+  daysLeft: number;
   reorderLink: string;
 };

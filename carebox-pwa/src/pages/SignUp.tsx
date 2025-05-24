@@ -13,6 +13,8 @@ export default function SignUp() {
     email: "",
     password: "",
   });
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -26,52 +28,80 @@ export default function SignUp() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage("");
 
-    console.log("Form submitted:", credentialsValue);
-    // (`Email: ${credentialsValue.email}`);
+    if (!termsAccepted) {
+      setErrorMessage("Please accept the terms and conditions");
+      return;
+    }
 
     const auth = getAuth();
-
     createUserWithEmailAndPassword(
       auth,
       credentialsValue.email,
       credentialsValue.password
     )
       .then((_userCredential) => {
-        // alert("Account created successfully!");
         navigate("/home");
       })
       .catch((error) => {
-        alert("Error signing up: " + error.message);
+        setErrorMessage(`Error signing up: ${error.message}`);
       });
   };
 
   return (
     <div className="signup-container">
-      <h1>Sign Up for CareBox</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          type="email"
-          id="email"
-          value={credentialsValue.email}
-          onChange={handleChange}
-          required
-        />
+      <div className="signup-title">Sign Up for CareBox</div>
 
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          id="password"
-          value={credentialsValue.password}
-          onChange={handleChange}
-          required
-        />
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+      <form onSubmit={handleSubmit} className="signup-form">
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            name="email"
+            type="email"
+            id="email"
+            value={credentialsValue.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            name="password"
+            type="password"
+            id="password"
+            value={credentialsValue.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="terms-checkbox">
+          <input
+            type="checkbox"
+            id="terms"
+            checked={termsAccepted}
+            onChange={() => setTermsAccepted(!termsAccepted)}
+          />
+          <label htmlFor="terms">
+            I agree to the{" "}
+            <span className="terms-link">Terms & Conditions</span>
+          </label>
+        </div>
 
         <button type="submit">Create Account</button>
       </form>
+
+      <div className="signup-login-prompt">
+        Already have an account?{" "}
+        <span className="signup-login-link" onClick={() => navigate("/login")}>
+          Log In
+        </span>
+      </div>
     </div>
   );
 }

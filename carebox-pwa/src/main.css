@@ -12,19 +12,59 @@
   font-style: normal;
 }
 
+html,
+body,
+#root {
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  height: 100dvh;
+  width: 100dvw;
+  box-sizing: border-box;
+  background: #fff0f6; /* match your app bg */
+}
+
 :root {
   font-family: "Handlee", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Light mode */
+  --bg-color: #fff0f6;
+  --card-bg: #ffd1e2;
+  --badge-bg: #ffb6c1;
+  --text-color: #800080;
+  --subtext-color: #555;
+  --badge-text: #800040;
+  --button-bg: #da70d6;
+  --button-hover-bg: #c060d6;
+  --navbar-bg: white;
+  --navbar-text: #666;
+  --navbar-active: #4f46e5;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --border-color: #ccc;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --bg-color: #1a1a2e;
+  --card-bg: #303045;
+  --badge-bg: #564f8a;
+  --text-color: #e2b4ff;
+  --subtext-color: #aaa;
+  --badge-text: #f0d0ff;
+  --button-bg: #7b2cbf;
+  --button-hover-bg: #9d4edd;
+  --navbar-bg: #1a1a2e;
+  --navbar-text: #aaa;
+  --navbar-active: #bb86fc;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --border-color: #444;
 }
 
 a {
@@ -43,6 +83,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 h1 {
@@ -57,12 +99,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-bg);
   cursor: pointer;
   transition: border-color 0.25s;
+  color: white;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--button-hover-bg);
 }
 button:focus,
 button:focus-visible {

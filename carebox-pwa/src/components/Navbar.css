@@ -1,21 +1,25 @@
 .navbar {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  background: white;
+  height: 70px;
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: white;
+  border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
-  padding: 0.75rem 0;
-  border-top: 1px solid #ccc;
-  z-index: 10;
+  align-items: center;
+  font-family: "London", sans-serif;
+  z-index: 1000;
 }
 
 .navbar a {
   text-decoration: none;
-  color: #666;
+  color: var(--navbar-text, #666);
   font-weight: 500;
 }
 
 .navbar a.active {
-  color: #4f46e5;
+  color: var(--navbar-active, #4f46e5);
 }
