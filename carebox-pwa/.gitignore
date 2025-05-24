@@ -39,3 +39,4 @@ Thumbs.db
 
 # Optional PWA assets
 public/icon-*.png
+.vercel
