@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "./SignUp.css";
 
