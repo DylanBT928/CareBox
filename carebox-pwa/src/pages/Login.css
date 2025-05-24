@@ -1,0 +1,112 @@
+.login-container {
+  background-color: var(--bg-color, #fff0f6);
+  min-height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4dvw;
+  box-sizing: border-box;
+}
+
+.login-title {
+  font-size: 8dvw;
+  font-weight: bold;
+  margin-bottom: 5dvh;
+  color: var(--text-color, #800080);
+  text-align: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 85dvw;
+  display: flex;
+  flex-direction: column;
+  gap: 3dvh;
+}
+
+.login-form label {
+  font-size: 4dvw;
+  font-weight: 600;
+  color: var(--text-color, #800080);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 1.8dvh 3dvw;
+  border-radius: 2dvw;
+  border: 1px solid var(--border-color, #ccc);
+  font-size: 4dvw;
+  background-color: var(--card-bg, #ffd1e2);
+  color: var(--text-color, #800080);
+  box-sizing: border-box;
+}
+
+.login-form button {
+  background-color: var(--button-bg, #da70d6);
+  color: white;
+  font-size: 4.5dvw;
+  font-weight: bold;
+  padding: 2dvh 0;
+  border: none;
+  border-radius: 9999px;
+  margin-top: 2dvh;
+  cursor: pointer;
+  box-shadow: 0 3px 6px var(--shadow-color, rgba(0, 0, 0, 0.15));
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-form button:hover {
+  background-color: var(--button-hover-bg, #c060d6);
+  transform: translateY(-1px);
+}
+
+.login-form button:active {
+  transform: translateY(0);
+}
+
+.login-divider {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color, #ccc);
+  line-height: 0.1em;
+  margin: 2dvh 0 3dvh;
+}
+
+.login-divider span {
+  background: var(--bg-color, #fff0f6);
+  padding: 0 2dvw;
+  color: var(--subtext-color, #555);
+  font-size: 3.5dvw;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 3dvh;
+  font-size: 3.5dvw;
+  color: var(--text-color, #800080);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-signup-prompt {
+  margin-top: 5dvh;
+  font-size: 3.5dvw;
+  color: var(--subtext-color, #555);
+  text-align: center;
+}
+
+.login-signup-link {
+  color: var(--text-color, #800080);
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.error-message {
+  color: #e53935;
+  font-size: 3.5dvw;
+  text-align: center;
+  margin-bottom: 2dvh;
+}

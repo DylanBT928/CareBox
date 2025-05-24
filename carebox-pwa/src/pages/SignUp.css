@@ -1,0 +1,118 @@
+.signup-container {
+  background-color: var(--bg-color, #fff0f6);
+  min-height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4dvw;
+  box-sizing: border-box;
+}
+
+.signup-title {
+  font-size: 8dvw;
+  font-weight: bold;
+  margin-bottom: 4dvh;
+  color: var(--text-color, #800080);
+  text-align: center;
+}
+
+.signup-form {
+  width: 100%;
+  max-width: 85dvw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5dvh;
+}
+
+.signup-form label {
+  font-size: 4dvw;
+  font-weight: 600;
+  color: var(--text-color, #800080);
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 1.8dvh 3dvw;
+  border-radius: 2dvw;
+  border: 1px solid var(--border-color, #ccc);
+  font-size: 4dvw;
+  background-color: var(--card-bg, #ffd1e2);
+  color: var(--text-color, #800080);
+  box-sizing: border-box;
+}
+
+.signup-form button {
+  background-color: var(--button-bg, #da70d6);
+  color: white;
+  font-size: 4.5dvw;
+  font-weight: bold;
+  padding: 2dvh 0;
+  border: none;
+  border-radius: 9999px;
+  margin-top: 2dvh;
+  cursor: pointer;
+  box-shadow: 0 3px 6px var(--shadow-color, rgba(0, 0, 0, 0.15));
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.signup-form button:hover {
+  background-color: var(--button-hover-bg, #c060d6);
+  transform: translateY(-1px);
+}
+
+.signup-form button:active {
+  transform: translateY(0);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1dvh;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 2dvw;
+  margin-top: 1dvh;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  width: 4dvw;
+  height: 4dvw;
+  cursor: pointer;
+}
+
+.terms-checkbox label {
+  font-size: 3.5dvw;
+  color: var(--subtext-color, #555);
+  cursor: pointer;
+}
+
+.terms-link {
+  color: var(--text-color, #800080);
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #e53935;
+  font-size: 3.5dvw;
+  text-align: center;
+  margin-bottom: 2dvh;
+}
+
+.signup-login-prompt {
+  margin-top: 4dvh;
+  font-size: 3.5dvw;
+  color: var(--subtext-color, #555);
+  text-align: center;
+}
+
+.signup-login-link {
+  color: var(--text-color, #800080);
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}

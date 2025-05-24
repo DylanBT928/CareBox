@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import {GoogleLogin} from '@react-oauth/google';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import "./SignUp.css";
+import "./Login.css";
 
 type Credentials = {
   email: string;
@@ -14,6 +14,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -27,8 +28,8 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", credentialsValue);
-    // alert(`Name: ${credentialsValue.email}, Email: ${credentialsValue.email}`);
+    setErrorMessage("");
+
     const auth = getAuth();
     signInWithEmailAndPassword(
       auth,
@@ -36,37 +37,54 @@ export default function Login() {
       credentialsValue.password
     )
       .then((_userCredential) => {
-        // alert("Logged in successfully!");
         navigate("/home");
       })
       .catch((error) => {
-        alert("Error signing up: " + error.message);
+        setErrorMessage(`Error signing in: ${error.message}`);
       });
   };
 
   return (
-    <div>
-      <div>CareBox</div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Enter email:</label>
+    <div className="login-container">
+      <div className="login-title">CareBox</div>
+
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
             value={credentialsValue.email}
             onChange={handleChange}
+            required
           />
-          <label htmlFor="password">Enter password:</label>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
             value={credentialsValue.password}
             onChange={handleChange}
+            required
           />
-          <button type="submit">Submit</button>
-        </form>
+        </div>
+
+        <button type="submit">Log In</button>
+
+        <div className="forgot-password">Forgot Password?</div>
+      </form>
+
+      <div className="login-signup-prompt">
+        Don't have an account?{" "}
+        <span className="login-signup-link" onClick={() => navigate("/signup")}>
+          Sign Up
+        </span>
       </div>
     </div>
   );
