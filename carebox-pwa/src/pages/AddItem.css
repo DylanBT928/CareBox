@@ -1,6 +1,6 @@
 .add-item-container {
   padding: 4dvw;
-  background-color: #fff0f6;
+  background-color: var(--bg-color, #fff0f6);
   min-height: 100dvh;
   width: 100dvw;
   display: flex;
@@ -20,19 +20,21 @@
 .add-item-form label {
   font-size: 4dvw;
   font-weight: bold;
-  color: #800080;
+  color: var(--text-color, #800080);
 }
 
 .add-item-form input {
   padding: 1.5dvh 3dvw;
   border-radius: 2dvw;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color, #ccc);
   font-size: 4dvw;
   box-sizing: border-box;
+  background-color: var(--card-bg, #ffd1e2);
+  color: var(--text-color, #800080);
 }
 
 .add-item-form button {
-  background-color: #ff6ec7;
+  background-color: var(--button-bg, #ff6ec7);
   color: white;
   font-size: 4dvw;
   font-weight: bold;
@@ -40,10 +42,10 @@
   border: none;
   border-radius: 9999px;
   cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 6px var(--shadow-color, rgba(0, 0, 0, 0.15));
   transition: background-color 0.2s ease;
 }
 
 .add-item-form button:hover {
-  background-color: #ff89d6;
+  background-color: var(--button-hover-bg, #ff89d6);
 }
