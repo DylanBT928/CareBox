@@ -4,9 +4,12 @@
   left: 0;
   width: 100%;
   height: 70px;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  background-color: white;
-  border-top: 1px solid #ccc;
+  padding-bottom: env(
+    safe-area-inset-bottom,
+    0
+  ); /* Already has safe area padding */
+  background-color: var(--navbar-bg, white);
+  border-top: 1px solid var(--border-color, #ccc);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -18,6 +21,11 @@
   text-decoration: none;
   color: var(--navbar-text, #666);
   font-weight: 500;
+  font-size: 4dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }
 
 .navbar a.active {
