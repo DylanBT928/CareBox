@@ -13,19 +13,32 @@ type Item = {
 
 export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchItems() {
-      const q = query(
-        collection(db, "items"),
-        where("ownerId", "==", auth.currentUser?.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Item[];
-      setItems(data);
+      const user = auth.currentUser;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const q = query(
+          collection(db, "items"),
+          where("ownerId", "==", user.uid)
+        );
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<Item, "id">),
+        }));
+        setItems(data);
+      } catch (err) {
+        console.error("Error fetching items:", err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchItems();
@@ -36,9 +49,36 @@ export default function Home() {
       ? Math.floor(item.quantityLeft / item.usagePerDay)
       : "∞";
 
+  if (loading) {
+    return (
+      <div className="home">
+        <h1>Loading your items...</h1>
+      </div>
+    );
+  }
+
+  if (!auth.currentUser) {
+    return (
+      <div className="home">
+        <h1>Please sign in</h1>
+      </div>
+    );
+  }
+
+  const getFriendlyName = () => {
+    const user = auth.currentUser;
+    if (!user) return "friend";
+
+    if (user.displayName) return user.displayName;
+
+    if (user.email) return user.email.split("@")[0];
+
+    return "friend";
+  };
+
   return (
     <div className="home">
-      <h1>Welcome, VenusHacks!</h1>
+      <h1>Welcome, {getFriendlyName()}!</h1>
       {items.map((item) => (
         <div className="card" key={item.id}>
           <div className="card-header">
