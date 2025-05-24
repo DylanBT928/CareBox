@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import AddItem from "./pages/AddItem";
-import History from "./pages/History";
+import Map from "./pages/Map";
 import Settings from "./pages/Settings";
 
 function AppRoutes() {
@@ -21,7 +21,7 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/add" element={<AddItem />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>

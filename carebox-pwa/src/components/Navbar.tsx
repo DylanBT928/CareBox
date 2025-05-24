@@ -12,8 +12,8 @@ export default function Navbar() {
       <Link to="/add" className={pathname === "/add" ? "active" : ""}>
         Add
       </Link>
-      <Link to="/history" className={pathname === "/history" ? "active" : ""}>
-        History
+      <Link to="/map" className={pathname === "/map" ? "active" : ""}>
+        Map
       </Link>
       <Link to="/settings" className={pathname === "/settings" ? "active" : ""}>
         Settings
