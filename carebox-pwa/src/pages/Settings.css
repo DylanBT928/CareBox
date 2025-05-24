@@ -4,6 +4,7 @@
   max-height: 100dvh;
   width: 100dvw;
   padding: 1dvw 1dvw 80px;
+  padding-bottom: 90px;
   box-sizing: border-box;
   overflow-y: auto;
   display: flex;

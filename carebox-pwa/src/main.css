@@ -12,6 +12,18 @@
   font-style: normal;
 }
 
+html,
+body,
+#root {
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  height: 100dvh;
+  width: 100dvw;
+  box-sizing: border-box;
+  background: #fff0f6; /* match your app bg */
+}
+
 :root {
   font-family: "Handlee", sans-serif;
   line-height: 1.5;
