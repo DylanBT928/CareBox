@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+//import {GoogleLogin} from '@react-oauth/google';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./SignUp.css";
 
@@ -8,7 +9,7 @@ type Credentials = {
   password: string;
 };
 
-export default function SignUp() {
+export default function Login() {
   const [credentialsValue, setcredentialsValue] = useState<Credentials>({
     email: "",
     password: "",
