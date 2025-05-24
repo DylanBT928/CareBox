@@ -27,7 +27,7 @@ export default function SignUp() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted:", credentialsValue);
-    alert(`Name: ${credentialsValue.email}, Email: ${credentialsValue.email}`);
+    // alert(`Name: ${credentialsValue.email}, Email: ${credentialsValue.email}`);
     const auth = getAuth();
     signInWithEmailAndPassword(
       auth,
@@ -35,7 +35,7 @@ export default function SignUp() {
       credentialsValue.password
     )
       .then((_userCredential) => {
-        alert("Logged in successfully!");
+        // alert("Logged in successfully!");
         navigate("/home");
       })
       .catch((error) => {
