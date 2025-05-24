@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Welcome from "./pages/Welcome";
+import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import AddItem from "./pages/AddItem";
@@ -16,6 +17,7 @@ function AppRoutes() {
       <div style={{ paddingBottom: showNavbar ? "60px" : "0" }}>
         <Routes>
           <Route path="/" element={<Welcome />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/add" element={<AddItem />} />
