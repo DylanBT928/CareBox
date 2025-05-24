@@ -28,7 +28,7 @@ export default function SignUp() {
     e.preventDefault();
 
     console.log("Form submitted:", credentialsValue);
-    alert(`Name: ${credentialsValue.email}, Email: ${credentialsValue.email}`);
+    alert(`Email: ${credentialsValue.email}`);
 
     const auth = getAuth();
 
