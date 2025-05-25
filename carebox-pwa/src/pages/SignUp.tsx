@@ -94,14 +94,17 @@ export default function SignUp() {
         </div>
 
         <button type="submit">Create Account</button>
-      </form>
 
+        <button onClick={() => navigate("/")}>Back</button>
+      </form>
+          
       <div className="signup-login-prompt">
         Already have an account?{" "}
         <span className="signup-login-link" onClick={() => navigate("/login")}>
           Log In
         </span>
       </div>
+     
     </div>
   );
 }
