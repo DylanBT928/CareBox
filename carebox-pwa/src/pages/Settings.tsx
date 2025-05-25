@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./Settings.css";
@@ -8,7 +7,7 @@ interface Props {
   setDarkMode: (value: boolean) => void;
 }
 
-export default function Settings(props: Props) {
+export default function Settings({ darkMode, setDarkMode }: Props) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,21 +22,34 @@ export default function Settings(props: Props) {
   };
 
   const toggleDarkMode = () => {
-    props.setDarkMode(!props.darkMode);
+    setDarkMode(!darkMode);
   };
 
   return (
     <div className="settings-container">
       <h1>Settings</h1>
-      <div className="settings-option">
-        <span className="setting-label"></span>
-        <button onClick={toggleDarkMode} className="theme-toggle-btn">
-          {props.darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+
+      <div className="settings-section">
+        <h2>Appearance</h2>
+        <div className="settings-option">
+          <span className="setting-label">Dark Mode</span>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={toggleDarkMode}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Account</h2>
+        <button onClick={handleLogout} className="logout-btn">
+          Log Out
         </button>
       </div>
-      <button onClick={handleLogout} className="logout-btn">
-        Log Out
-      </button>
     </div>
   );
 }
