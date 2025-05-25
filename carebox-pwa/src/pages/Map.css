@@ -133,7 +133,7 @@
   border-radius: 25px;
   box-shadow: 0 2px 6px var(--shadow-color, rgba(0, 0, 0, 0.3));
   cursor: pointer;
-  font-family: "London", sans-serif;
+  font-family: "Patrick Hand", cursive;
   transition: transform 0.2s;
 }
 
@@ -151,7 +151,7 @@ select {
 .clinic-popup {
   padding: 5px;
   max-width: 250px;
-  font-family: "London", sans-serif;
+  font-family: "Patrick Hand", cursive;
 }
 
 .clinic-popup strong {
