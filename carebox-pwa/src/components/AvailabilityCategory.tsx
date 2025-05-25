@@ -1,5 +1,5 @@
-import type Item from "../../types/Item";
 import ItemCard from "./ItemCard";
+import type { Item } from "./ItemCard";
 import "./AvailabilityCategory.css";
 
 interface Props {

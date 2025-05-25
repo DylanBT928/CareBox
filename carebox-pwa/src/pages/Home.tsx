@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 
 import AvailabilityCategory from "../components/AvailabilityCategory";
-import type { Item } from "../../types/Item";
+import type { Item } from "../components/ItemCard";
+import bunnyOrangeImg from "../assets/bunny_orange.png";
 
 export default function Home() {
   const [noneLeft, setNoneLeft] = useState<Item[]>([]);
@@ -114,11 +115,7 @@ export default function Home() {
         <div className="signin-message">Please sign in</div>
       ) : noItems ? (
         <div className="empty-state">
-          <img
-            src="/src/assets/bunny_orange.png"
-            alt="Bunny"
-            className="bunny-mascot"
-          />
+          <img src={bunnyOrangeImg} alt="Bunny" className="bunny-mascot" />
           <p>No medications found</p>
           <Link to="/add" className="add-btn">
             Add new medication

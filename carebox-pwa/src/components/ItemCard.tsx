@@ -1,8 +1,17 @@
 import { Link } from "react-router-dom";
-import type Item from "../../types/Item";
 import BunnyOrange from "../assets/bunny_orange.png";
 import BunnyYellow from "../assets/bunny_yellow.png";
 import "./ItemCard.css";
+
+export interface Item {
+  id: string;
+  name: string;
+  quantityLeft: number;
+  usagePerDay: number;
+  daysLeft: number;
+  reorderLink?: string;
+  ownerId: string;
+}
 
 interface Props {
   item: Item;
@@ -10,7 +19,6 @@ interface Props {
 }
 
 export default function ItemCard(props: Props) {
-  // Choose bunny based on days left
   const getBunnyImage = () => {
     if (props.item.daysLeft > 7) {
       return BunnyYellow;
