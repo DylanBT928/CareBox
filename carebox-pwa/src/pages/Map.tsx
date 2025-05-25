@@ -9,11 +9,15 @@ declare global {
 
 export default function Map() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const leafletMap = useRef<any>(null);
   const marker = useRef<any>(null);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [leafletLoaded, setLeafletLoaded] = useState(false);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
 
   useEffect(() => {
     if (window.L) {
@@ -23,30 +27,26 @@ export default function Map() {
 
     const loadLeaflet = async () => {
       try {
-        const linkElement = document.createElement("link");
-        linkElement.rel = "stylesheet";
-        linkElement.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        document.head.appendChild(linkElement);
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        document.head.appendChild(link);
 
         return new Promise<void>((resolve, reject) => {
           const script = document.createElement("script");
           script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
           script.async = true;
-
           script.onload = () => {
             setLeafletLoaded(true);
             resolve();
           };
-
-          script.onerror = () => {
+          script.onerror = () =>
             reject(new Error("Failed to load Leaflet library"));
-          };
-
           document.body.appendChild(script);
         });
-      } catch (error) {
-        console.error("Error loading Leaflet:", error);
-        setError("Failed to load map library. Please try again later.");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load map library.");
         setLoading(false);
       }
     };
@@ -55,22 +55,19 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    if (leafletLoaded && mapRef.current) {
-      initMap();
-    }
+    if (leafletLoaded && mapRef.current) initMap();
   }, [leafletLoaded]);
 
   const initMap = () => {
     if (!mapRef.current || !window.L) {
-      setError("Map library not available. Please refresh and try again.");
+      setError("Map library not available.");
       setLoading(false);
       return;
     }
 
     try {
       mapRef.current.innerHTML = "";
-
-      const defaultLocation = [37.7749, -122.4194]; // San Francisco
+      const defaultLocation = [37.7749, -122.4194]; // Fallback
 
       leafletMap.current = window.L.map(mapRef.current).setView(
         defaultLocation,
@@ -79,18 +76,14 @@ export default function Map() {
 
       window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 19,
       }).addTo(leafletMap.current);
 
       getUserLocation();
     } catch (e) {
-      console.error("Error initializing map:", e);
-      setError(
-        `Error initializing map: ${
-          e instanceof Error ? e.message : "Unknown error"
-        }`
-      );
+      console.error("Map init error:", e);
+      setError("Map failed to initialize.");
       setLoading(false);
     }
   };
@@ -99,64 +92,37 @@ export default function Map() {
     setLoading(true);
     setError(null);
 
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser.");
-      setLoading(false);
-      return;
-    }
-
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        try {
-          const userLocation = [
-            position.coords.latitude,
-            position.coords.longitude,
-          ];
+      (pos) => {
+        const coords: [number, number] = [
+          pos.coords.latitude,
+          pos.coords.longitude,
+        ];
+        setUserLocation(coords);
 
-          if (leafletMap.current) {
-            leafletMap.current.setView(userLocation, 15);
+        if (leafletMap.current) {
+          leafletMap.current.setView(coords, 15);
 
-            // Handle the marker
-            if (marker.current) {
-              marker.current.setLatLng(userLocation);
-            } else {
-              // Create a custom marker icon
-              const customIcon = window.L.divIcon({
-                className: "user-location-marker",
-                html: `<div class="marker-inner"></div>`,
-                iconSize: [20, 20],
-              });
+          const customIcon = window.L.divIcon({
+            className: "user-location-marker",
+            html: `<div class="marker-inner"></div>`,
+            iconSize: [20, 20],
+          });
 
-              marker.current = window.L.marker(userLocation, {
-                icon: customIcon,
-              }).addTo(leafletMap.current);
-            }
+          if (marker.current) {
+            marker.current.setLatLng(coords);
+          } else {
+            marker.current = window.L.marker(coords, {
+              icon: customIcon,
+            }).addTo(leafletMap.current);
           }
-        } catch (e) {
-          console.error("Error setting user location:", e);
-          setError("Error displaying your location. Please try again.");
-        } finally {
-          setLoading(false);
         }
+
+        setLoading(false);
       },
-      (geoError) => {
-        console.error("Geolocation error:", geoError);
-        let errorMsg = "Unable to access your location.";
-
-        switch (geoError.code) {
-          case 1:
-            errorMsg +=
-              " Please enable location permissions in your browser settings.";
-            break;
-          case 2:
-            errorMsg += " Position unavailable. Try again later.";
-            break;
-          case 3:
-            errorMsg += " Request timed out.";
-            break;
-        }
-
-        setError(errorMsg);
+      (err) => {
+        console.error("Geolocation error:", err);
+        setError("Unable to get your location.");
         setLoading(false);
       },
       {
@@ -167,28 +133,125 @@ export default function Map() {
     );
   };
 
+  const searchNearby = async () => {
+    if (!leafletMap.current || !userLocation) {
+      alert("Location not available. Try again.");
+      return;
+    }
+
+    const [lat, lng] = userLocation;
+
+    const query = `
+      [out:json];
+      (
+        node["amenity"="clinic"](around:24000,${lat},${lng});
+        way["amenity"="clinic"](around:24000,${lat},${lng});
+        relation["amenity"="clinic"](around:24000,${lat},${lng});
+      );
+      out center;
+    `;
+
+    try {
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        body: query,
+      });
+
+      const data = await res.json();
+      if (!data.elements || data.elements.length === 0) {
+        alert("No nearby clinics found.");
+        return;
+      }
+
+      // Clear existing markers
+      Object.values(leafletMap.current._layers).forEach((layer: any) => {
+        if (layer._popup && layer !== marker.current) {
+          leafletMap.current.removeLayer(layer);
+        }
+      });
+
+      // Counter for successfully added markers
+      let markersAdded = 0;
+
+      // Process each element from the API response
+      data.elements.forEach((el: any) => {
+        let validCoords;
+
+        // Handle different element types
+        if (el.type === "node") {
+          // Direct node coordinates
+          validCoords = [el.lat, el.lon];
+        } else if (el.center && el.center.lat && el.center.lon) {
+          // For ways and relations with center property
+          validCoords = [el.center.lat, el.center.lon];
+        } else if (el.lat && el.lon) {
+          // Fallback if lat/lon are directly on the element
+          validCoords = [el.lat, el.lon];
+        }
+
+        // Only create marker if we have valid coordinates
+        if (validCoords && validCoords[0] && validCoords[1]) {
+          const name = el.tags?.name || "Clinic";
+          const address = el.tags?.["addr:street"]
+            ? `${el.tags["addr:housenumber"] || ""} ${
+                el.tags["addr:street"]
+              }, ${el.tags["addr:city"] || ""}`
+            : "Address not available";
+
+          // Create popup content with more info
+          const popupContent = `
+          <div class="clinic-popup">
+            <strong>${name}</strong>
+            <p>${address}</p>
+            ${el.tags?.phone ? `<p>📞 ${el.tags.phone}</p>` : ""}
+          </div>
+        `;
+
+          window.L.marker(validCoords)
+            .addTo(leafletMap.current)
+            .bindPopup(popupContent);
+
+          markersAdded++;
+        }
+      });
+
+      if (markersAdded === 0) {
+        alert(
+          "No clinic locations could be displayed. Try searching in a different area."
+        );
+        return;
+      }
+
+      // Adjust the map view to fit all markers
+      leafletMap.current.setView([lat, lng], 12);
+    } catch (err) {
+      console.error("Overpass error:", err);
+      alert("Search failed. Please try again later.");
+    }
+  };
+
   return (
     <div className="map-container">
       <h1>Map</h1>
 
+      <div className="map-controls">
+        <button onClick={searchNearby}>Show Nearby Clinics</button>
+      </div>
+
       <div className="leaflet-map" ref={mapRef}></div>
 
       {loading && <div className="map-status">Loading map...</div>}
-
       {error && (
         <div className="map-status error">
           <p>{error}</p>
-          <button onClick={initMap} className="retry-button">
-            Retry
-          </button>
+          <button onClick={initMap}>Retry</button>
         </div>
       )}
-
       {!loading && !error && (
         <button
           className="location-button"
           onClick={getUserLocation}
-          aria-label="Center map on current location"
+          aria-label="Recenter map"
         >
           📍
         </button>
