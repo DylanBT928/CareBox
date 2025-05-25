@@ -1,69 +1,95 @@
 .card {
-  background: #ffd1e2;
-  border-radius: 2dvw;
-  padding: 3dvw;
-  margin-bottom: 3dvh;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 90dvw;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 8px;
+  position: relative;
 }
 
-.card-header {
+.bunny-container {
+  grid-row: 1 / span 2;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+}
+
+.bunny-image {
+  width: 50px;
+  height: auto;
+}
+
+.card-content {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 1dvw;
-}
-
-.name {
-  font-size: 5dvw;
-  font-weight: bold;
-  margin-bottom: 1dvh;
-  color: #9e529e;
-}
-
-.subtext {
-  font-size: 3.5dvw;
-  color: #868686;
   text-align: left;
-  margin-left: 1dvw;
-  display: block;
 }
 
-[data-theme="dark"] .subtext {
-  color: #bbb;
+.item-name {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0 0 4px 0;
+  color: var(--text-color);
 }
 
-.badge {
-  padding: 0.4dvh 1.4dvw;
-  border-radius: 9999px;
-  font-weight: 700;
-  font-size: 3.2dvw;
-  color: #800040;
+.item-usage,
+.item-quantity {
+  font-size: 16px;
+  color: var(--subtext-color);
+  margin: 2px 0;
+}
+
+.days-badge {
+  grid-column: 3;
+  grid-row: 1;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
   white-space: nowrap;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 
 .card-actions {
+  grid-column: 2 / span 2;
+  grid-row: 2;
   display: flex;
-  justify-content: space-between;
-  margin-top: 2dvh;
-  gap: 1dvw;
-  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.btn {
-  background: #da70d6;
+.reorder-button {
+  background: var(--button-bg);
   color: white;
-  font-weight: bold;
-  padding: 1.5dvh 3dvw;
-  border-radius: 9999px;
-  text-decoration: none;
-  font-size: 3.5dvw;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s ease;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: "Patrick Hand", cursive;
+  font-size: 16px;
+  cursor: pointer;
+  flex-grow: 1;
 }
 
-.btn:hover {
-  background: #c060d6;
+.view-button {
+  background: var(--button-bg);
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: "Patrick Hand", cursive;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+}
+
+[data-theme="dark"] .bunny-image {
+  filter: brightness(0.9);
 }

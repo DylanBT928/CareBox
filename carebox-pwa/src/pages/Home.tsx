@@ -1,121 +1,131 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db, auth } from "../firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from "../firebase";
+import ItemCard from "../components/ItemCard";
+import BunnyLogo from "../assets/bunny_orange.png"; // Add these bunny images to your assets folder
+import BunnyYellow from "../assets/bunny_yellow.png";
+import BunnyHead from "../assets/bunny_head.png";
 import "./Home.css";
 
-import type Item from "../../types/Item";
-import AvailabilityCategory from "../components/AvailabilityCategory";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Link } from "react-router-dom";
-
 export default function Home() {
-  const [noneLeft, setNoneLeft] = useState<Item[]>([]);
-  const [littleLeft, setLittleLeft] = useState<Item[]>([]);
-  const [manyLeft, setManyLeft] = useState<Item[]>([]);
+  const [user, setUser] = useState(null);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [noItems, setNoItems] = useState(false);
 
   useEffect(() => {
-    async function fetchItems() {
-      const auth = getAuth();
-      
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          try {
-            const q = query(
-              collection(db, "items"),
-              
-              where("ownerId", "==", user ? user.uid : "")
-            );
-            const querySnapshot = await getDocs(q);
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        fetchItems(currentUser.uid);
+      } else {
+        setLoading(false);
+      }
+    });
 
-            const noneLeftItems: Item[] = [];
-            const littleLeftItems: Item[] = [];
-            const manyLeftItems: Item[] = [];
-
-            querySnapshot.docs.forEach((doc) => {
-              const item = {
-                id: doc.id,
-                ...(doc.data() as Omit<Item, "id">),
-              }
-
-              const daysLeft = calcDaysLeft(item);
-
-              item.daysLeft = daysLeft;
-
-              if (daysLeft == 0) {
-                noneLeftItems.push(item);
-              } else if (daysLeft <= 7) {
-                littleLeftItems.push(item);
-              } else {
-                manyLeftItems.push(item);
-              }
-            });
-
-            if (noneLeftItems.length == 0 && littleLeftItems.length == 0 && manyLeftItems.length == 0) {
-              setNoItems(true);
-            }
-
-            noneLeftItems.sort(sortByName);
-            littleLeftItems.sort(sortByName);
-            manyLeftItems.sort(sortByName);
-            
-            setNoneLeft(noneLeftItems);
-            setLittleLeft(littleLeftItems);
-            setManyLeft(manyLeftItems);
-          } catch (err) {
-            console.error("Error fetching items:", err);
-          } finally {
-            setLoading(false);
-          }
-        } else {
-          setLoading(false);
-        }
-      });
-    }
-
-    fetchItems();
+    return () => unsubscribe();
   }, []);
 
-  const sortByName = (item1: Item, item2: Item) => {
-    if (item1.daysLeft == item2.daysLeft) {
-      return item1.name.localeCompare(item2.name);
-    } else {
-      return item1.daysLeft - item2.daysLeft;
+  const fetchItems = async (userId) => {
+    setLoading(true);
+    try {
+      const q = query(collection(db, "items"), where("userId", "==", userId));
+
+      const querySnapshot = await getDocs(q);
+      const itemData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      // Calculate days left
+      itemData.forEach((item) => {
+        if (item.quantity && item.usagePerDay) {
+          item.daysLeft = Math.floor(item.quantity / item.usagePerDay);
+        } else {
+          item.daysLeft = 0;
+        }
+      });
+
+      // Sort by days left, ascending
+      itemData.sort((a, b) => a.daysLeft - b.daysLeft);
+
+      setItems(itemData);
+    } catch (error) {
+      console.error("Error fetching items:", error);
     }
+    setLoading(false);
   };
 
-  const getFriendlyName = () => {
-    const user = auth.currentUser;
-    if (!user) return "friend";
-
-    if (user.displayName) return user.displayName;
-
-    if (user.email) return user.email.split("@")[0];
-
-    return "friend";
-  };
-
-  const calcDaysLeft = (item: Item) => Math.floor(item.quantityLeft / item.usagePerDay);
+  // Group items by low stock and in stock
+  const lowStockItems = items.filter((item) => item.daysLeft <= 7);
+  const inStockItems = items.filter((item) => item.daysLeft > 7);
 
   return (
-    <div className="home">
-      {loading ? <h1>Loading your items...</h1> :
-      !auth.currentUser ? <h1>Please sign in</h1> :
-      <div className="items">
-        <h1>Welcome, {getFriendlyName()}!</h1>
-        {noItems ? 
-          <div>
-            <h2>No medications found</h2>
-            <Link to="/add" className={"add-btn"}>Add new medication</Link>
-          </div> : 
-          <div>
-            <AvailabilityCategory items={noneLeft} categoryTitle="Out of stock" categoryColor="ffb6c1"/>
-            <AvailabilityCategory items={littleLeft} categoryTitle="Low stock" categoryColor="fff0c1"/>
-            <AvailabilityCategory items={manyLeft} categoryTitle="In stock" categoryColor="c8ffc1"/>
-          </div>
-        }
-      </div>}
+    <div className="home-container">
+      <div className="home-header">
+        <h1 className="welcome-text">
+          Welcome, {user?.displayName || "test"}!
+        </h1>
+        <img src={BunnyHead} alt="Bunny" className="bunny-icon" />
+      </div>
+
+      {loading ? (
+        <div className="loading">Loading your items...</div>
+      ) : items.length === 0 ? (
+        <div className="empty-state">
+          <img src={BunnyLogo} alt="Bunny" className="bunny-mascot" />
+          <p>You don't have any items yet.</p>
+          <Link to="/add" className="add-btn">
+            Add Your First Item
+          </Link>
+        </div>
+      ) : (
+        <>
+          {lowStockItems.length > 0 && (
+            <section className="items-section">
+              <h2 className="section-title">Low stock</h2>
+              <div className="items-divider"></div>
+              <div className="items-list">
+                {lowStockItems.map((item) => (
+                  <ItemCard
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    quantity={item.quantity}
+                    usagePerDay={item.usagePerDay}
+                    daysLeft={item.daysLeft}
+                    reorderLink={item.reorderUrl}
+                    category={item.category}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {inStockItems.length > 0 && (
+            <section className="items-section">
+              <h2 className="section-title">In stock</h2>
+              <div className="items-divider"></div>
+              <div className="items-list">
+                {inStockItems.map((item) => (
+                  <ItemCard
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    quantity={item.quantity}
+                    usagePerDay={item.usagePerDay}
+                    daysLeft={item.daysLeft}
+                    reorderLink={item.reorderUrl}
+                    category={item.category}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
     </div>
   );
 }
