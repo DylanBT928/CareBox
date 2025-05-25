@@ -5,7 +5,7 @@
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   display: grid;
-  grid-template-columns: 60px 1fr auto;
+  grid-template-columns: 70px 1fr auto;
   grid-template-rows: auto auto;
   gap: 8px;
   position: relative;
@@ -16,10 +16,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-right: 8px;
 }
 
 .bunny-image {
-  width: 50px;
+  width: 60px;
   height: auto;
 }
 

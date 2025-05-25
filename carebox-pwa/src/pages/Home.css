@@ -61,20 +61,16 @@ h1 {
 .home-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
 .welcome-text {
-  font-size: 28px;
+  font-size: 32px;
   color: var(--text-color);
   margin: 0;
   font-weight: normal;
-}
-
-.bunny-icon {
-  width: 40px;
-  height: auto;
+  text-align: center;
 }
 
 .section-title {
@@ -110,7 +106,7 @@ h1 {
 }
 
 .bunny-mascot {
-  width: 100px;
+  width: 220px;
   height: auto;
   margin-bottom: 20px;
 }

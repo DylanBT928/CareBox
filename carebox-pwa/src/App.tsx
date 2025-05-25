@@ -15,13 +15,11 @@ function AppRoutes() {
   const location = useLocation();
   const showNavbar = !["/", "/signup", "/login"].includes(location.pathname);
 
-  // Add state for dark mode
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
 
-  // Update the theme when darkMode changes
   useEffect(() => {
     if (darkMode) {
       document.documentElement.setAttribute("data-theme", "dark");
