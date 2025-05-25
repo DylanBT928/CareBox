@@ -133,3 +133,52 @@
     bottom: 80px;
   }
 }
+
+.map-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.map-controls button {
+  padding: 0.75rem 1.5rem;
+  font-size: 4dvw;
+  background-color: var(--button-bg, #da70d6);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px var(--shadow-color, rgba(0, 0, 0, 0.3));
+  cursor: pointer;
+  font-family: "London", sans-serif;
+  transition: transform 0.2s;
+}
+
+.map-controls button:active {
+  transform: scale(0.95);
+}
+
+select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.clinic-popup {
+  padding: 5px;
+  max-width: 250px;
+  font-family: "London", sans-serif;
+}
+
+.clinic-popup strong {
+  display: block;
+  font-size: 16px;
+  color: var(--text-color, #800080);
+  margin-bottom: 5px;
+}
+
+.clinic-popup p {
+  margin: 5px 0;
+  font-size: 14px;
+}
