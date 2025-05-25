@@ -1,25 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./Settings.css";
 
-export default function Settings() {
-  const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+interface Props {
+  darkMode: boolean;
+  setDarkMode: (value: boolean) => void;
+}
 
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      darkMode ? "dark" : "light"
-    );
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
+export default function Settings(props: Props) {
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     const auth = getAuth();
@@ -33,15 +23,8 @@ export default function Settings() {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
+    props.setDarkMode(!props.darkMode);
   };
-
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      darkMode ? "dark" : "light"
-    );
-  }, [darkMode]);
 
   return (
     <div className="settings-container">
@@ -49,7 +32,7 @@ export default function Settings() {
       <div className="settings-option">
         <span className="setting-label"></span>
         <button onClick={toggleDarkMode} className="theme-toggle-btn">
-          {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          {props.darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         </button>
       </div>
       <button onClick={handleLogout} className="logout-btn">

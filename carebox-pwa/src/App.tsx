@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import AddItem from "./pages/AddItem";
 import Map from "./pages/Map";
 import Settings from "./pages/Settings";
+import { useEffect, useState } from "react";
 
 function AppRoutes() {
   const location = useLocation();
