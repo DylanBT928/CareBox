@@ -46,7 +46,11 @@ function AppRoutes() {
     <>
       <div
         className="app-container"
-        style={{ paddingBottom: showNavbar ? "70px" : "0" }}
+        style={{
+          paddingBottom: showNavbar ? "70px" : "0",
+          minHeight: "100%",
+          overflow: "auto",
+        }}
       >
         <AnimatePresence mode="wait">
           <motion.div

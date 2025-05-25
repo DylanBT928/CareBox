@@ -6,13 +6,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   display: grid;
   grid-template-columns: 70px 1fr auto;
-  grid-template-rows: auto auto;
+  grid-template-areas:
+    "bunny content badge"
+    "bunny content ."
+    "actions actions actions";
   gap: 8px;
   position: relative;
 }
 
 .bunny-container {
-  grid-row: 1 / span 2;
+  grid-area: bunny;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +28,7 @@
 }
 
 .card-content {
-  grid-column: 2;
+  grid-area: content;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -47,8 +50,7 @@
 }
 
 .days-badge {
-  grid-column: 3;
-  grid-row: 1;
+  grid-area: badge;
   background: var(--badge-bg);
   color: var(--badge-text);
   padding: 6px 12px;
@@ -58,8 +60,7 @@
 }
 
 .card-actions {
-  grid-column: 2 / span 2;
-  grid-row: 2;
+  grid-area: actions;
   display: flex;
   gap: 10px;
   margin-top: 8px;
@@ -75,6 +76,10 @@
   font-size: 16px;
   cursor: pointer;
   flex-grow: 1;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .view-button {

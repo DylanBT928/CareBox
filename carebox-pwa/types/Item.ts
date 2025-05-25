@@ -1,8 +1,11 @@
-export default interface Item {
+type Item = {
   id: string;
   name: string;
-  usagePerDay: number;
   quantityLeft: number;
+  usagePerDay: number;
   daysLeft: number;
-  reorderLink: string;
+  reorderLink?: string;
+  ownerId: string;
 };
+
+export type { Item };
