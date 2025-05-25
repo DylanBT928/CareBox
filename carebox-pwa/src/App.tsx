@@ -15,13 +15,11 @@ function AppRoutes() {
   const location = useLocation();
   const showNavbar = !["/", "/signup", "/login"].includes(location.pathname);
 
-  // Add state for dark mode
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
 
-  // Update the theme when darkMode changes
   useEffect(() => {
     if (darkMode) {
       document.documentElement.setAttribute("data-theme", "dark");
@@ -48,7 +46,11 @@ function AppRoutes() {
     <>
       <div
         className="app-container"
-        style={{ paddingBottom: showNavbar ? "70px" : "0" }}
+        style={{
+          paddingBottom: showNavbar ? "70px" : "0",
+          minHeight: "100%",
+          overflow: "auto",
+        }}
       >
         <AnimatePresence mode="wait">
           <motion.div

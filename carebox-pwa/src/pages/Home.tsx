@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db, auth } from "../firebase";
-import "./Home.css";
-
-import type Item from "../../types/Item";
-import AvailabilityCategory from "../components/AvailabilityCategory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link } from "react-router-dom";
+import "./Home.css";
+
+import AvailabilityCategory from "../components/AvailabilityCategory";
+import type { Item } from "../components/ItemCard";
+import bunnyOrangeImg from "../assets/bunny_orange.png";
 
 export default function Home() {
   const [noneLeft, setNoneLeft] = useState<Item[]>([]);
@@ -18,13 +19,12 @@ export default function Home() {
   useEffect(() => {
     async function fetchItems() {
       const auth = getAuth();
-      
+
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           try {
             const q = query(
               collection(db, "items"),
-              
               where("ownerId", "==", user ? user.uid : "")
             );
             const querySnapshot = await getDocs(q);
@@ -37,7 +37,7 @@ export default function Home() {
               const item = {
                 id: doc.id,
                 ...(doc.data() as Omit<Item, "id">),
-              }
+              };
 
               const daysLeft = calcDaysLeft(item);
 
@@ -52,14 +52,18 @@ export default function Home() {
               }
             });
 
-            if (noneLeftItems.length == 0 && littleLeftItems.length == 0 && manyLeftItems.length == 0) {
+            if (
+              noneLeftItems.length == 0 &&
+              littleLeftItems.length == 0 &&
+              manyLeftItems.length == 0
+            ) {
               setNoItems(true);
             }
 
             noneLeftItems.sort(sortByName);
             littleLeftItems.sort(sortByName);
             manyLeftItems.sort(sortByName);
-            
+
             setNoneLeft(noneLeftItems);
             setLittleLeft(littleLeftItems);
             setManyLeft(manyLeftItems);
@@ -96,26 +100,46 @@ export default function Home() {
     return "friend";
   };
 
-  const calcDaysLeft = (item: Item) => Math.floor(item.quantityLeft / item.usagePerDay);
+  const calcDaysLeft = (item: Item) =>
+    Math.floor(item.quantityLeft / item.usagePerDay);
 
   return (
-    <div className="home">
-      {loading ? <h1>Loading your items...</h1> :
-      !auth.currentUser ? <h1>Please sign in</h1> :
-      <div className="items">
-        <h1>Welcome, {getFriendlyName()}!</h1>
-        {noItems ? 
-          <div>
-            <h2>No medications found</h2>
-            <Link to="/add" className={"add-btn"}>Add new medication</Link>
-          </div> : 
-          <div>
-            <AvailabilityCategory items={noneLeft} categoryTitle="Out of stock" categoryColor="ffb6c1"/>
-            <AvailabilityCategory items={littleLeft} categoryTitle="Low stock" categoryColor="fff0c1"/>
-            <AvailabilityCategory items={manyLeft} categoryTitle="In stock" categoryColor="c8ffc1"/>
-          </div>
-        }
-      </div>}
+    <div className="home-container">
+      <div className="home-header">
+        <h1 className="welcome-text">Welcome, {getFriendlyName()}!</h1>
+      </div>
+
+      {loading ? (
+        <div className="loading">Loading your items...</div>
+      ) : !auth.currentUser ? (
+        <div className="signin-message">Please sign in</div>
+      ) : noItems ? (
+        <div className="empty-state">
+          <img src={bunnyOrangeImg} alt="Bunny" className="bunny-mascot" />
+          <p>No medications found</p>
+          <Link to="/add" className="add-btn">
+            Add new medication
+          </Link>
+        </div>
+      ) : (
+        <div className="items-container">
+          <AvailabilityCategory
+            items={noneLeft}
+            categoryTitle="Out of stock"
+            categoryColor="ffb6c1"
+          />
+          <AvailabilityCategory
+            items={littleLeft}
+            categoryTitle="Low stock"
+            categoryColor="fff0c1"
+          />
+          <AvailabilityCategory
+            items={manyLeft}
+            categoryTitle="In stock"
+            categoryColor="c8ffc1"
+          />
+        </div>
+      )}
     </div>
   );
 }

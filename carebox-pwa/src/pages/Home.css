@@ -5,22 +5,22 @@ body,
   padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
     env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
   height: 100dvh;
-  overflow: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
-.home {
+.home-container {
   background: var(--bg-color, #fff0f6);
   min-height: 100dvh;
-  max-height: 100dvh;
-  padding-bottom: 90px;
-  box-sizing: border-box;
-  min-width: 100dvw;
+  padding: 16px;
+  padding-top: 20px;
+  padding-bottom: 80px;
+  max-width: 600px;
+  margin: 0 auto;
+  height: auto;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -48,4 +48,111 @@ h1 {
   box-shadow: 0 2px 5px var(--shadow-color, rgba(0, 0, 0, 0.2));
   transition: background 0.2s ease, transform 0.1s ease;
   cursor: pointer;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.welcome-text {
+  font-size: 32px;
+  color: var(--text-color);
+  margin: 0;
+  font-weight: normal;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 2px;
+  font-weight: normal;
+}
+
+.items-divider {
+  border-top: 2px dashed var(--text-color);
+  opacity: 0.3;
+  margin: 8px 0 16px;
+}
+
+.items-section {
+  margin-bottom: 24px;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.bunny-mascot {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.empty-state p {
+  color: var(--text-color);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  background: var(--button-bg);
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 18px;
+  font-family: "Patrick Hand", cursive;
+  border: none;
+  box-shadow: 0 2px 5px var(--shadow-color, rgba(0, 0, 0, 0.2));
+  transition: background 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: var(--button-hover-bg);
+}
+
+.loading,
+.signin-message {
+  text-align: center;
+  color: var(--text-color);
+  padding: 40px 0;
+  font-size: 18px;
+}
+
+.items-container {
+  margin-top: 20px;
+  overflow-y: visible;
+}
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 1000;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: relative;
+  overflow-y: auto;
 }
