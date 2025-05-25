@@ -1,15 +1,21 @@
 import React, { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
 
 type Credentials = {
+  fname: string;
+  lname: string;
   email: string;
   password: string;
 };
 
 export default function SignUp() {
   const [credentialsValue, setcredentialsValue] = useState<Credentials>({
+    fname: "",
+    lname: "",
     email: "",
     password: "",
   });
@@ -41,7 +47,17 @@ export default function SignUp() {
       credentialsValue.email,
       credentialsValue.password
     )
-      .then((_userCredential) => {
+      .then(async (_userCredential) => {
+        const user = _userCredential.user;
+
+        updateProfile(user, {displayName: credentialsValue.fname})
+
+        await addDoc(collection(db, "names"), {
+          fname: credentialsValue.fname,
+          lname: credentialsValue.lname,
+          userId: user.uid
+        });
+        
         navigate("/home");
       })
       .catch((error) => {
@@ -56,6 +72,30 @@ export default function SignUp() {
       {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       <form onSubmit={handleSubmit} className="signup-form">
+        <div className="form-group">
+          <label htmlFor="fname">First name</label>
+          <input
+            name="fname"
+            type="fname"
+            id="fname"
+            value={credentialsValue.fname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="lname">Last name</label>
+          <input
+            name="lname"
+            type="lname"
+            id="lname"
+            value={credentialsValue.lname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
