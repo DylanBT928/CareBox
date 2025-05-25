@@ -8,11 +8,29 @@ import Home from "./pages/Home";
 import AddItem from "./pages/AddItem";
 import Map from "./pages/Map";
 import Settings from "./pages/Settings";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import "./App.css";
 
 function AppRoutes() {
   const location = useLocation();
   const showNavbar = !["/", "/signup", "/login"].includes(location.pathname);
+
+  // Add state for dark mode
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "dark";
+  });
+
+  // Update the theme when darkMode changes
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -49,7 +67,12 @@ function AppRoutes() {
               <Route path="/home" element={<Home />} />
               <Route path="/add" element={<AddItem />} />
               <Route path="/map" element={<Map />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route
+                path="/settings"
+                element={
+                  <Settings darkMode={darkMode} setDarkMode={setDarkMode} />
+                }
+              />
             </Routes>
           </motion.div>
         </AnimatePresence>
