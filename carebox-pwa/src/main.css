@@ -21,7 +21,8 @@ body,
   height: 100dvh;
   width: 100dvw;
   box-sizing: border-box;
-  background: #fff0f6;
+  background: var(--bg-color);
+  transition: background-color 0.3s ease; /* Add this line */
 }
 
 :root {
@@ -83,6 +84,7 @@ body {
   width: 100%;
   background-color: var(--bg-color);
   color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Add this line */
 }
 
 h1,
