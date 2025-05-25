@@ -1,6 +1,6 @@
 .map-container {
   background: var(--bg-color, #fff0f6);
-  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,6 +8,10 @@
   position: relative;
   padding: 10px 10px 80px 10px;
   box-sizing: border-box;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .map-container h1 {
@@ -20,51 +24,25 @@
 
 .leaflet-map {
   width: 100%;
-  height: 75dvh;
+  height: 68dvh;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px var(--shadow-color, rgba(0, 0, 0, 0.2));
   position: relative;
   z-index: 1;
   margin-bottom: 20px;
+  touch-action: none;
 }
 
-.map-status {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 15px 25px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  font-size: 4dvw;
-  color: var(--text-color, #800080);
-  max-width: 80%;
-  z-index: 1000;
-}
-
-.map-status.error {
-  color: #e53935;
-  background-color: #fff8f8;
-  border: 1px solid #ffcdd2;
-}
-
-.retry-button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: var(--button-bg, #da70d6);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-size: 3.5dvw;
-  cursor: pointer;
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  touch-action: none !important;
 }
 
 .location-button {
-  position: absolute;
-  bottom: 13dvh;
+  position: fixed;
+  bottom: 12dvh;
   right: 4dvw;
   background: var(--button-bg, #da70d6);
   color: white;
@@ -113,7 +91,8 @@
 }
 
 .leaflet-bottom {
-  bottom: 30px !important;
+  bottom: 20px !important;
+  touch-action: none;
 }
 
 .leaflet-bottom.leaflet-right {
