@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
 @font-face {
   font-family: "Brittany";
   src: url("/src/assets/fonts/BrittanySignature.ttf") format("truetype");
@@ -22,28 +24,29 @@ body,
   width: 100dvw;
   box-sizing: border-box;
   background: var(--bg-color);
-  transition: background-color 0.3s ease; /* Add this line */
+  transition: background-color 0.3s ease;
 }
 
 :root {
-  font-family: "London", sans-serif;
+  font-family: "Patrick Hand", cursive;
   line-height: 1.5;
   font-weight: 400;
-
-  --bg-color: #fff0f6;
-  --card-bg: #ffd1e2;
-  --badge-bg: #ffb6c1;
-  --text-color: #800080;
-  --subtext-color: #555;
-  --badge-text: #800040;
-  --button-bg: #da70d6;
-  --button-hover-bg: #c060d6;
+  --bg-color: #ffebe5;
+  --card-bg: #ffffff;
+  --badge-bg: #fff2d9;
+  --text-color: #8d6e63;
+  --subtext-color: #a1887f;
+  --badge-text: #8d6e63;
+  --button-bg: #f5a8a8;
+  --button-hover-bg: #f8bbd0;
   --navbar-bg: white;
-  --navbar-text: #666;
-  --navbar-active: #4f46e5;
-  --shadow-color: rgba(0, 0, 0, 0.2);
-  --border-color: #ccc;
-
+  --navbar-text: #a1887f;
+  --navbar-active: #f5a8a8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: #e0e0e0;
+  --health-color: #f5a8a8;
+  --supplement-color: #ffe082;
+  --household-color: #a5d6a7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -51,19 +54,19 @@ body,
 }
 
 [data-theme="dark"] {
-  --bg-color: #1a1a2e;
-  --card-bg: #303045;
-  --badge-bg: #564f8a;
-  --text-color: #e2b4ff;
-  --subtext-color: #aaa;
-  --badge-text: #f0d0ff;
-  --button-bg: #7b2cbf;
-  --button-hover-bg: #9d4edd;
-  --navbar-bg: #1a1a2e;
-  --navbar-text: #aaa;
-  --navbar-active: #bb86fc;
-  --shadow-color: rgba(0, 0, 0, 0.4);
-  --border-color: #444;
+  --bg-color: #433c4c;
+  --card-bg: #534d5c;
+  --badge-bg: #665e70;
+  --text-color: #ffdcd2;
+  --subtext-color: #d7ccc8;
+  --badge-text: #ffffff;
+  --button-bg: #f8bbd0;
+  --button-hover-bg: #f48fb1;
+  --navbar-bg: #3e3748;
+  --navbar-text: #d7ccc8;
+  --navbar-active: #f8bbd0;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --border-color: #5d5464;
 }
 
 a {
@@ -84,7 +87,7 @@ body {
   width: 100%;
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease; /* Add this line */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,

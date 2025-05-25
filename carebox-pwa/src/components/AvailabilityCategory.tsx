@@ -1,19 +1,31 @@
-import type Item from "../../types/Item";
-import "./AvailabilityCategory.css";
 import ItemCard from "./ItemCard";
+import type { Item } from "./ItemCard";
+import "./AvailabilityCategory.css";
 
 interface Props {
-    items: Item[];
-    categoryTitle: string;
-    categoryColor: string;
+  items: Item[];
+  categoryTitle: string;
+  categoryColor: string;
 }
 
-export default function AvailabilityCategory(props: Props) {
-    return (
-        props.items.length != 0 &&
-        <div>
-            <h2>{props.categoryTitle}</h2>
-            {props.items.map(item => <ItemCard item={item} categoryColor={props.categoryColor} key={item.id}/>)}
-        </div>
-    )
+export default function AvailabilityCategory({
+  items,
+  categoryTitle,
+  categoryColor,
+}: Props) {
+  if (items.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="category-section">
+      <h2 className="section-title">{categoryTitle}</h2>
+      <div className="items-divider"></div>
+      <div className="items-list">
+        {items.map((item) => (
+          <ItemCard key={item.id} item={item} categoryColor={categoryColor} />
+        ))}
+      </div>
+    </section>
+  );
 }
