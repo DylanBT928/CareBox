@@ -19,12 +19,19 @@
   font-size: 5dvw;
   font-weight: bold;
   margin-bottom: 1dvh;
-  color: #800080;
+  color: #9e529e;
 }
 
 .subtext {
   font-size: 3.5dvw;
-  color: #555;
+  color: #868686;
+  text-align: left;
+  margin-left: 1dvw;
+  display: block;
+}
+
+[data-theme="dark"] .subtext {
+  color: #bbb;
 }
 
 .badge {
