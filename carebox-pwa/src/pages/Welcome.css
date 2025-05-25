@@ -14,7 +14,7 @@
 
 .welcome-title {
   font-family: "Brittany", cursive;
-  color: #800080;
+  color: #981f4c;
   text-align: center;
   font-size: 20dvw;
   font-weight: bold;
@@ -28,7 +28,7 @@
 }
 
 .welcome-buttons button {
-  background: #ff69b4;
+  background: #981f4c;
   color: white;
   font-family: "Handlee", cursive;
   font-size: 4dvw;
@@ -41,7 +41,7 @@
 }
 
 .welcome-buttons button:hover {
-  background: #ff85c1;
+  background: rgb(219, 130, 174);
   transform: translateY(-1px);
 }
 
