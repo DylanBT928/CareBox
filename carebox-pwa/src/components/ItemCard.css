@@ -30,9 +30,8 @@
   display: block;
 }
 
-/* Dark mode override */
 [data-theme="dark"] .subtext {
-  color: #bbb; /* Lighter color for dark mode for better contrast */
+  color: #bbb;
 }
 
 .badge {
